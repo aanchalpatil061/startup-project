@@ -34,6 +34,7 @@ export const Input = forwardRef<TextInput, InputProps>(
       onRightIconPress,
       containerStyle,
       password = false,
+      multiline,
       ...props
     },
     ref,
@@ -50,6 +51,7 @@ export const Input = forwardRef<TextInput, InputProps>(
         <View
           style={[
             styles.inputWrapper,
+            multiline && styles.inputWrapperMultiline,
             focused && styles.focused,
             error ? styles.errorBorder : null,
           ]}
@@ -59,12 +61,13 @@ export const Input = forwardRef<TextInput, InputProps>(
           ) : null}
           <TextInput
             ref={ref}
-            style={[styles.input, leftIcon ? styles.inputWithLeft : null]}
+            style={[styles.input, leftIcon ? styles.inputWithLeft : null, multiline && styles.inputMultiline]}
             placeholderTextColor={Colors.textMuted}
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             secureTextEntry={secureTextEntry}
             autoCapitalize={isPassword ? 'none' : props.autoCapitalize}
+            multiline={multiline}
             {...props}
           />
           {isPassword ? (
@@ -107,6 +110,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height: 48,
     paddingHorizontal: 14,
+  },
+  inputWrapperMultiline: {
+    height: undefined,
+    minHeight: 48,
+    alignItems: 'flex-start',
+    paddingVertical: 12,
+  },
+  inputMultiline: {
+    height: undefined,
+    minHeight: 80,
   },
   focused: { borderColor: Colors.primary },
   errorBorder: { borderColor: Colors.error },

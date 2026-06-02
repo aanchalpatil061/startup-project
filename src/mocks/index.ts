@@ -508,18 +508,18 @@ export const mockAuth = {
     return ok({ user: MOCK_ADMIN, tokens: MOCK_TOKENS });
   },
 
-  signupStudent: async () => {
+  signupStudent: async (_payload: Record<string, string>) => {
     await delay(800);
     return ok({ user: MOCK_STUDENT, tokens: MOCK_TOKENS });
   },
 
-  signupTeacher: async () => {
+  signupTeacher: async (_payload: Record<string, string>) => {
     await delay(800);
     return ok({ user: MOCK_TEACHER, tokens: MOCK_TOKENS });
   },
 
-  forgotPassword: async () => { await delay(500); return ok(null); },
-  resetPassword: async () => { await delay(); return ok(null); },
+  forgotPassword: async (_email: string, _role: string) => { await delay(500); return ok(null); },
+  resetPassword: async (_token: string, _password: string) => { await delay(); return ok(null); },
   logout: async () => { await delay(200); return ok(null); },
   refreshToken: async () => { await delay(); return ok({ user: MOCK_STUDENT, tokens: MOCK_TOKENS }); },
 };
@@ -623,7 +623,7 @@ export const mockAdmin = {
 
   getSemesters: async () => { await delay(); return ok(_semesters); },
   getSemester: async (id: string) => { await delay(); return ok(_semesters.find((s) => s.id === id) ?? _semesters[0]); },
-  createSemester: async (payload: { name: string; startDate: string; endDate: string }) => {
+  createSemester: async (payload: { name: string; startDate: string; endDate: string; status?: string }) => {
     await delay(600);
     const s: Semester = { id: `sem_${Date.now()}`, ...payload, status: 'upcoming', totalCourses: 0, totalStudents: 0 };
     _semesters.push(s);

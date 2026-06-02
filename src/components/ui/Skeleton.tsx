@@ -5,7 +5,7 @@ import Animated, {
   useAnimatedStyle,
   withRepeat,
   withTiming,
-  interpolateColor,
+  Easing,
 } from 'react-native-reanimated';
 import { Colors } from '../../constants/colors';
 
@@ -22,25 +22,25 @@ export const Skeleton: React.FC<SkeletonProps> = ({
   borderRadius = 8,
   style,
 }) => {
-  const progress = useSharedValue(0);
+  const opacity = useSharedValue(1);
 
   useEffect(() => {
-    progress.value = withRepeat(withTiming(1, { duration: 900 }), -1, true);
+    opacity.value = withRepeat(
+      withTiming(0.4, { duration: 700, easing: Easing.inOut(Easing.ease) }),
+      -1,
+      true,
+    );
   }, []);
 
   const animStyle = useAnimatedStyle(() => ({
-    backgroundColor: interpolateColor(
-      progress.value,
-      [0, 1],
-      [Colors.skeleton, Colors.skeletonHighlight],
-    ),
+    opacity: opacity.value,
   }));
 
   return (
     <Animated.View
       style={[
+        { backgroundColor: Colors.skeleton, width: width as number, height, borderRadius },
         animStyle,
-        { width: width as number, height, borderRadius },
         style,
       ]}
     />

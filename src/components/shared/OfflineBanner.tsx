@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import Animated, { useAnimatedStyle, withTiming, useSharedValue, useEffect } from 'react-native-reanimated';
+import { useEffect } from 'react';
+import Animated, { useAnimatedStyle, withTiming, useSharedValue } from 'react-native-reanimated';
 import { Colors } from '../../constants/colors';
 import { FontSize, FontFamily } from '../../constants/typography';
 import { useNetwork } from '../../hooks/useNetwork';
